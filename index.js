@@ -3,7 +3,14 @@
  */
 
 module.exports = function (obj) {
-    var fn =  obj.initialize || (function(){});
+    var fn = obj.initialize || (function () {
+        });
+    for (var key in obj) {
+        if (key != "initialize") {
+            fn.prototype[key] = obj[key];
+        }
+
+    }
     return fn;
 };
 
