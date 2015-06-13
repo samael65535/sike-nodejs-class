@@ -2,17 +2,18 @@
  * Created by samael on 15-6-11.
  */
 
-module.exports = function (obj) {
-    var fn = obj.initialize || (function () {
+module.exports = function (child, parent) {
+    var fn = child.initialize || (function () {
         });
-    for (var key in obj) {
+    for (var key in child) {
         if (key != "initialize") {
-            fn.prototype[key] = obj[key];
+            fn.prototype[key] = child[key];
         }
-
     }
-    return fn;
+    if (parent) {
+        fn.prototype.constructor.prototype = parent.prototype;
+    }
+    fn.prototype.constructor = fn;
+    return fn
 };
-
-
 
