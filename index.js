@@ -10,10 +10,11 @@ module.exports = function (child, parent) {
             fn.prototype[key] = child[key];
         }
     }
+    fn.__super__ = Object;
     if (parent) {
         fn.prototype.constructor.prototype = parent.prototype;
+        fn.__super__ = parent;
     }
-    console.log(fn.prototype.constructor === parent.constructor);
     fn.prototype.constructor = fn;
     return fn
 };
