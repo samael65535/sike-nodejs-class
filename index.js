@@ -13,6 +13,7 @@ module.exports = function (child, parent) {
     if (parent) {
         fn.prototype.constructor.prototype = parent.prototype;
     }
+    console.log(fn.prototype.constructor === parent.constructor);
     fn.prototype.constructor = fn;
     return fn
 };
