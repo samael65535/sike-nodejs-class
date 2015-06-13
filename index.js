@@ -16,6 +16,10 @@ module.exports = function (child, parent) {
         fn.__super__ = parent;
     }
     fn.prototype.constructor = fn;
+    fn.prototype.super = function() {
+
+    }
+
     return fn
 };
 
