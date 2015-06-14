@@ -19,12 +19,9 @@ module.exports = function (child, parent) {
     }
 
     fn.prototype.super = function() {
-
-        return function() {
-            var methodName = arguments[0];
-            var args = [].slice.call(arguments, 1);
-            return this.__super__.prototype[methodName].apply(this, args);
-        }
+        var methodName = arguments[0];
+        var args = [].slice.call(arguments, 1);
+        return fn.__super__.prototype[methodName].apply(this, args);
     };
     return fn
 };
