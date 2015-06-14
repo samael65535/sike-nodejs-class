@@ -25,11 +25,31 @@ module.exports = function (child, parent) {
             var args = [].slice.call(arguments, 1);
             current_class = current_class.__super__;
             var result = current_class.prototype[methodName].apply(this, args);
-            //current_class = fn;
+            current_class = fn;
             return result;
         }
 //        return fn.__super__.prototype[methodName].apply(this, args);
     }();
-    return fn
+
+    if (parent) {
+        var _super = parent.prototype;
+        var prototype = fn.prototype;
+        for (var name in child) {
+            prototype[name] = child[name] instanceof Function &&
+            _super[name] instanceof Function?
+                (function(name, fn){
+                    return function() {
+                        var tmp = this._super;
+                        this._super = _super[name];
+                        var ret = fn.apply(this, arguments);
+                        this._super = tmp;
+                        console.log(ret);
+                        return ret;
+                    };
+                })(name, child[name]) :
+                child[name];
+            }
+    }
+    return fn;
 };
 

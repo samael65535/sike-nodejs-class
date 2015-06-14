@@ -13,14 +13,16 @@ var A = Class({
 var B = Class({
     foo: function(a,b) {
         console.log("B#foo",a,b)
-        return this.super("foo",a*10,b*100);
+        //return this._super(a*10,b*100);
+        return this.super("foo", a* 10, b* 100);
     }
 },A);
 
 var C = Class({
     foo: function(a,b) {
         console.log("C#foo",a,b)
-        return this.super("foo",a*10,b*100);
+        //return this._super(a*10,b*100);
+        return this.super("foo", a* 10, b* 100);
     }
 },B);
 
