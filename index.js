@@ -3,12 +3,14 @@
  */
 
 module.exports = function (child, parent) {
-    var fn = child.initialize || (function () {
-        });
+    var fn = function () {
+        if (child.initialize)
+            return child.initialize.apply(this, arguments);
+    };
     fn.__super__ = Object;
     if (parent) {
         fn.__super__ = parent;
-        //fn.prototype.constructor.prototype = parent.prototype;
+        fn.prototype.constructor.prototype = Object.create(parent.prototype);
     }
     fn.prototype.constructor = fn;
 
@@ -43,7 +45,6 @@ module.exports = function (child, parent) {
                         this._super = _super[name];
                         var ret = fn.apply(this, arguments);
                         this._super = tmp;
-                        console.log(ret);
                         return ret;
                     };
                 })(name, child[name]) :
